@@ -57,7 +57,22 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
+###### Generate new Resource
+```bash
+$ nest g resource <resource-name>
+```
+###### Generate new module
+```bash
+$ nest g module <module-name>
+```
+###### Generate new controller
+```bash
+$ nest g controller <controller-name>
+```
+###### Generate new service
+```bash
+$ nest g service <service-name>
+```
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
