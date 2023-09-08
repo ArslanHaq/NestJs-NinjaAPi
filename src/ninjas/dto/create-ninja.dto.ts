@@ -1,4 +1,4 @@
-import { IsEnum, isEnum, MinLength } from 'class-validator';
+import { IsEnum, MinLength } from 'class-validator';
 
 export class CreateNinjaDto {
   @MinLength(3)
@@ -8,4 +8,5 @@ export class CreateNinjaDto {
     message: 'Weapon must be either Kunai or nunchuks',
   })
   weapon: string;
+  belt?: string;
 }
