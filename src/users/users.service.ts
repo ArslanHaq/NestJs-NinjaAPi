@@ -1,19 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class UsersService {
+  private readonly users: CreateUserDto[] = [
+    {
+      userId: '1',
+      username: 'john',
+      password: 'changeme',
+    },
+    {
+      userId: '2',
+      username: 'chris',
+      password: 'secret',
+    },
+    {
+      userId: '3',
+      username: 'maria',
+      password: 'guess',
+    },
+  ];
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    const newUser = {
+      ...createUserDto,
+      userId: Date.now().toString(),
+    };
+    this.users.push(newUser);
+    return this.users;
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(username: string): Promise<CreateUserDto | undefined> {
+    if (this.users.find((user) => user.username === username) === undefined) {
+      throw new NotFoundException('User not found');
+    }
+    return this.users.find((user) => user.username === username);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
