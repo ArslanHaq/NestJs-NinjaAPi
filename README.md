@@ -57,33 +57,68 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
 ###### Generate new Resource
+
 ```bash
 $ nest g resource <resource-name>
 ```
+
 ###### Generate new module
+
 ```bash
 $ nest g module <module-name>
 ```
+
 ###### Generate new controller
+
 ```bash
 $ nest g controller <controller-name>
 ```
+
 ###### Generate new service
+
 ```bash
 $ nest g service <service-name>
 ```
 
-## Pipes and Validators 
+## Pipes and Validators
+
 ###### ValidationPipe
+
 ```bash
 $ npm i class-validator class-transformer
 ```
+
 ## Guards
+
 ###### To protect ends points before access
+
 ```bash
 $ nest g guard <guard-name>
 ```
+
+## Password Hasing before storing user
+
+```bash
+$ npm install bcrypt
+
+To hash a password:
+
+bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
+        // Store hash in your password DB.
+    });
+});
+
+To check a password:
+
+// Load hash from your password DB.
+bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
+    // result == true
+});
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
