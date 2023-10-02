@@ -1,31 +1,36 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+import { comparePasswords, hashPassword } from '../../shared';
+import { JwtService } from '@nestjs/jwt';
+import { saltRounds } from '../../shared';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   async signIn(username: string, password: string): Promise<any> {
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-      bcrypt.hash(password, salt, function (err, hash) {
-        // Store hash in your password DB.
-        console.log(hash);
-        bcrypt.compare(password, hash, function (err, result) {
-          console.log(result);
-        });
-      });
-    });
+    // TODO: Convert Plain Password to hash before store to backend
+    const hash = await hashPassword(password, saltRounds);
+    console.log('hash = ', hash);
+
+    // TODO: Compare Plain Password with hash from backend before login
+    const compareResult = await comparePasswords(password, hash);
+    console.log('compare result = ', compareResult);
 
     const user: CreateUserDto = await this.usersService.findOne(username);
     if (user.password !== password) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const { password: _, ...result } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
-    return result;
+
+    // Note: we choose a property name of sub to hold our userId value to be consistent with JWT standards.
+    const payload = { sub: user.userId, username: user.username };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }
