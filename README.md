@@ -118,6 +118,22 @@ bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
     // result == true
 });
 ```
+## JWT Token
+```bash
+$ npm install --save @nestjs/jwt
+```
+## Reflectors
+```bash
+In the context of Nest.js and similar frameworks, 
+a reflector is a utility that allows you to read and manipulate metadata
+ associated with classes, methods, or properties in your application. 
+ It enables you to access additional information or annotations attached to these elements, 
+ typically through the use of decorators, 
+ and use that information to make decisions or perform actions in your
+ application, such as authentication, authorization, or dependency injection.
+ 
+ YOU CAN SEE EXAMPLE OF REFLECTOR IN AUTH/DECORATOR and AUTHGuard
+```
 
 ## Support
 

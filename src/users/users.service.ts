@@ -23,7 +23,7 @@ export class UsersService {
     },
   ];
   create(createUserDto: CreateUserDto) {
-    const newUser = {
+    const newUser: CreateUserDto = {
       ...createUserDto,
       userId: Date.now().toString(),
     };

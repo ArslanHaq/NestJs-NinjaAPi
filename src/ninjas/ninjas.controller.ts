@@ -17,12 +17,15 @@ import { CreateNinjaDto } from './dto/create-ninja.dto';
 import { UpdateNinjaDto } from './dto/update-ninja.dto';
 import { NinjasService } from './ninjas.service';
 import { BeltGuard } from '../belt/belt.guard';
+import { SkipAuth } from '../auth/decorators/skipAuth.decorator';
 
 @Controller('ninjas')
 export class NinjasController {
   constructor(private readonly ninjasService: NinjasService) {}
 
   // GET/ ninjas?weapon=? --> [] (get All Ninjas)
+  // Add skipAuth decorator to skip auth guard
+  // @SkipAuth()
   @Get()
   getNinjas(@Query('weapon') weapon: 'Kunai' | 'nunchuks') {
     return this.ninjasService.getNinjas(weapon);
