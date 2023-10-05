@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [
@@ -16,6 +17,17 @@ import { jwtConstants } from './constants';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  // Enable authentication globally
+  // If the vast majority of your endpoints should be protected by default, you can register the authentication guard as a global guard
+  // instead of using @UseGuards() decorator on top of each controller
+  // you could simply flag which routes should be public.
+  // With this in place, Nest will automatically bind AuthGuard to all endpoints.
+  providers: [
+    AuthService,
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AuthModule {}

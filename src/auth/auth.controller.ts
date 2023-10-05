@@ -13,11 +13,13 @@ import {
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
 import { AuthGuard } from './auth.guard';
+import { SkipAuth } from './decorators/skipAuth.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @SkipAuth()
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @UsePipes(new ValidationPipe())
@@ -26,7 +28,6 @@ export class AuthController {
   }
 
   // @UseGuards(AuthGuard)
-  @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req: any) {
     return req.user;
