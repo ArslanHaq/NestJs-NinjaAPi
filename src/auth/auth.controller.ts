@@ -5,14 +5,12 @@ import {
   HttpCode,
   HttpStatus,
   Post,
-  UseGuards,
   UsePipes,
   ValidationPipe,
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
-import { AuthGuard } from './auth.guard';
 import { SkipAuth } from './decorators/skipAuth.decorator';
 
 @Controller('auth')
