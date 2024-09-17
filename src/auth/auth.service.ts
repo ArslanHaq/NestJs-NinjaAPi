@@ -4,15 +4,19 @@ import { UsersService } from 'src/users/users.service';
 import { comparePasswords, hashPassword } from '../../shared';
 import { JwtService } from '@nestjs/jwt';
 import { saltRounds } from '../../shared';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private configService: ConfigService,
   ) {}
 
   async signIn(username: string, password: string): Promise<any> {
+    console.log('env', this.configService.get('JWT_SECRET'));
+
     // TODO: Convert Plain Password to hash before store to backend
     const hash = await hashPassword(password, saltRounds);
     console.log('hash = ', hash);
